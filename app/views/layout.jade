@@ -1,0 +1,27 @@
+!!! 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/lib/jquery-1.7.1.min.js')
+    script(src='/javascripts/lib/coffee-script-1.2.0.js')
+    script(src='/socket.io/socket.io.js')
+    
+    script(type='text/javascript')
+      var socket = new io.connect('http://localhost:7070');
+      window.socket = socket;
+      //alert(document.location.href);
+
+      socket.on('connect', function(){
+        //alert('connect');
+      });
+
+      socket.on('news', function (data) {
+        //socket.emit('client', 'will you go forever?')
+        //alert(JSON.stringify(data));
+        var el = document.querySelector('.data');
+        el.innerHTML += JSON.stringify(data) + '<br />'
+      });
+
+      function bac(){ alert('clicked'); socket.emit('client', 'hi guy'); };
+  body!= body

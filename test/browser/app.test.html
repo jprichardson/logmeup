@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>LogMeUp - Tests</title>
+  <link rel="stylesheet" href="/stylesheets/mocha.css" />
+  <script src="/javascripts/lib/jquery-1.7.1.min.js"></script>
+  <script src="/javascripts/lib/mocha-0.10.2.js"></script>
+  <script src="/javascripts/lib/coffee-script-1.2.0.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src='https://raw.github.com/visionmedia/superagent/master/superagent.min.js'></script>
+  <script src="https://raw.github.com/jprichardson/string.js/master/string.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script>
+      function assert(expr) {
+        if (!expr) throw new Error('Assertion failure.');
+      }
+
+      function T(expr) { return assert(expr); };
+      function F(expr) { return assert(!expr); };
+  </script>
+  <script src="/javascripts/log.coffee" type="text/coffeescript"></script>
+  <script src="log.test.coffee" type="text/coffeescript"></script>
+  <script>
+    //alert('hi');
+    setTimeout(function(){
+      $(document).ready(function(){
+        mocha
+          .run()
+          .globals(['logmeup']) // acceptable globals
+      });
+    }, 100); //Mocha runs too early if we don't do this and SOME TEST FAILURES WILL NOT SHOW
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
+</html>

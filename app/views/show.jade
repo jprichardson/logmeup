@@ -1,0 +1,23 @@
+script(src='/javascripts/log.coffee',type='text/coffeescript')
+:coffeescript
+  $(document).ready ->
+    setTimeout(->
+      #fetch initial data
+      urlFields = window.location.href.split('log/')
+      collection_app = urlFields[1].split('/')
+      collection = collection_app[0]
+      app = collection_app[1]
+
+      dataEl = document.querySelector('#data')
+      
+      logmeup.fetchLogData collection, app, (data) ->
+        logmeup.addDataToPage(dataEl, data, (->))
+
+      logmeup.on 'data', (data) ->
+        recEl = logmeup.convertToElement(data)
+        dataEl.insertBefore(recEl, dataEl.firstChild)
+
+      logmeup.setupSocket(window.location.origin, collection, app)
+    ,100)
+h2 Log data:
+#data
