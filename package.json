@@ -1,6 +1,6 @@
 {
     "name": "logmeup-server",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "description": "",
     "homepage": [ 
           "http://logmeup.com"
@@ -18,16 +18,17 @@
     "dependencies": {
         "string": ">=0.0.3",
         "coffee-script" : ">=1.2.0",
-        "mongodb": ">=0.9.8-2",
         "socket.io": ">=0.8.7",
         "mongodb": ">=0.9.8-1",
-        "request": ">=2.9.3",
+        "commander": ">=0.5.2",
+        "express": ">=2.5.0",
+        "jade": ">=0.20.0"
     },
     "devDependencies": {
         "mocha": ">=0.10",
         "superagent": ">=0.3.0"
     },
-    "engines:" {
+    "engines": {
         "node": ">=0.6.4"  
     }, 
     "bin": "./bin/logmeup"

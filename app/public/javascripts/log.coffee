@@ -3,16 +3,18 @@ logmeup.messages = {} #simple EventEmitter emulation... probably a better way to
 
 
 logmeup.convertToElement = (record) ->
-  millis = record.created_at - (new Date()).getTimezoneOffset() * 60000 #convert UTC millis
+  millis = record.created_at
   dt = new Date(millis)
+
+  dateStr = "#{dt.getFullYear()}-#{dt.getMonth()+1}-#{dt.getDate()} #{dt.getHours()}:#{dt.getMinutes()}:#{dt.getSeconds()}"
 
   recEl = document.createElement('div')
   recEl.id = 'record-' + record['_id']
-  recEl.innerHTML = '<b>' + dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString() + '</b> ' +  JSON.stringify(record.data)
+  recEl.innerHTML = '<b>' + dateStr + '</b> ' +  JSON.stringify(record.data)
   recEl
 
 logmeup.fetchLogData = (collection, app, callback) ->
-  url = "#{window.location.origin}/log/data/#{collection}/#{app}" 
+  url = "#{window.location.origin}/log/#{collection}/#{app}/data.json" 
   $.getJSON url, (data) ->
     callback(data)
 

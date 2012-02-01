@@ -1,4 +1,4 @@
-require('../../extensions/date')
+
 mongo = require('mongodb')
 {Db} = mongo
 {Connection} = mongo
@@ -46,12 +46,21 @@ exports.store = (req, res) ->
     if err?
       res.send 'Error: ' + err.message
     else
-      data = created_at: (new Date()).getUTCTime(), data: req.body
-      collection.insert data, {safe: true}, (err, docs) ->
+      storedData = created_at: (new Date()).getTime(), data: req.body
+      
+      if req.is('json')
+        storedData.data = req.body
+      else if req.is('application/x-www-form-urlencoded')
+        storedData.data = req.body.data
+      else
+        res.send "Error: Incorrect Content-Type: '#{req.header('Content-Type')}' please submit with 'application/json' or 'application/x-www-form-urlencoded'."
+        return
+
+      collection.insert storedData, {safe: true}, (err, docs) ->
         if err?
           res.send 'Error storing: ' + err.message
         else
-          sockets.emit(colName, JSON.stringify(data))
+          sockets.emit(colName, JSON.stringify(storedData))
           res.send 'Stored data.'
         
 exports.show = (req, res) ->
@@ -61,19 +70,6 @@ exports.show = (req, res) ->
     if err?
       res.send 'Error: ' + err.message
     else
-      #collection.find {}, (err, cursor) ->
-      #  if err?
-      #    res.send 'Error storing: ' + err.message
-      #  else
-          ###
-          setTimeout(->
-            cursor.each (err,doc) ->
-              if doc?
-                #buf += 'Data: ' + doc.data + '<br/>'
-                console.log JSON.stringify(doc)
-                sockets.emit('news', JSON.stringify(doc))
-          ,250)
-          ###
       res.render('show', {title: colName})
 
 exports.data = (req, res) ->
