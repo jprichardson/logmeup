@@ -1,7 +1,12 @@
 script(src='/javascripts/log.coffee',type='text/coffeescript')
 :coffeescript
   $(document).ready ->
-    setTimeout(->
+    r = setInterval(->
+      if typeof(logmeup) is 'undefined'
+        return
+      else
+        clearInterval(r)
+        
       #fetch initial data
       urlFields = window.location.href.split('log/')
       collection_app = urlFields[1].split('/')

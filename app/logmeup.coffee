@@ -1,6 +1,8 @@
 express = require('express')
 fs = require('fs')
+path = require('path')
 database = require('./database')
+#assets = require('connect-assets')
 
 logmeup = module.exports = {}
 app = module.exports.app = express.createServer();
@@ -8,7 +10,6 @@ io = require('socket.io').listen(app)
 io.set('log level',1)
 routes = require('./routes')
 
-logmeup.env = 'development'
 
 app.configure ->
   app.set('views', __dirname + '/views')
@@ -32,9 +33,9 @@ app.configure 'development', ->
 app.configure 'testing', ->
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   app.all '/testing/:file', (req, res) ->
-    fs.readFile "../test/browser/#{req.params.file}", (err,data) ->
+    fs.readFile path.join(__dirname,"../test/browser/#{req.params.file}"), (err,data) ->
       file = req.params.file
-      #console.log file
+      console.log file
       if file.endsWith('.html')
         res.header("Content-Type", "text/html")
       else if file.endsWith('.js')
@@ -45,7 +46,7 @@ app.configure 'testing', ->
       if data?
         res.send data.toString()
       else # file not found
-        res.send ''
+        res.send 'File not found.'
 
 app.configure 'production', ->
   app.use(express.errorHandler())
@@ -56,7 +57,7 @@ app.put('/log/:org/:app', routes.create)
 app.post('/log/:org/:app', routes.store)
 app.get('/log/:org/:app', routes.show)
 
-app.get('/log/data/:org/:app', routes.data)
+app.get('/log/:org/:app/data.json', routes.data)
 
 logmeup.init = (params = {}, callback) ->
   config = params.config
