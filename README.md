@@ -2,7 +2,7 @@
 
 Easily view your log files in one place. View this at [logmeup.com](http://logmeup.com).
 
-## Value Proposition
+## Why?
 
 Let's say that you have multiple servers and applications spread all over the cloud and your LAN. You are tired of constantly checking up on them. LogMeUp allows you to open up your web browser and easily view all of your log data in real-time (using websockets) in one place.
 
@@ -276,6 +276,16 @@ Error Output:
 
 View here: https://github.com/jprichardson/logmeup-server/blob/master/CHANGELOG.md
 
+
+## Roadmap
+
+* Remove CoffeeScript dependence from client/server.
+* Remove MongoDB dependence.
+* Implement log file clear function. Delete/Create is a short term fix.
+* Remove timestamps if desired.
+* Infinite scrolling.
+* Searching for regular expressions.
+* Notifications/filtering for regular expressions discovered.
 
 
 ## License
