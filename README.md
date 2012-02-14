@@ -137,6 +137,7 @@ LogMeUp is a Node.js app built with the following modules:
 ### Available Libraries
 
 * [Node.js](https://github.com/jprichardson/node-logmeup): `npm install logmeup`
+* [3rd Party App Logging](https://github.com/jprichardson/node-logmeup-server): `npm install logmeup-stdio`
 * C# (Coming soon)
 * Ruby (Coming soon)
 
@@ -279,13 +280,13 @@ View here: https://github.com/jprichardson/logmeup-server/blob/master/CHANGELOG.
 
 ## License
 
-Afero GNU Publice License Version 3. See [LICENSE](license) for complete details.
+Afero GNU Publice License Version 3. See [LICENSE][license] for complete details.
 
-Copyright (c) 2012 JP Richardson [Twitter](twitter) / [Google+](googleplus)
+Copyright (c) 2012 JP Richardson [Twitter][twitter] / [Google+][googleplus]
 
 ## Other
 
-If you use Git, you should check out my startup [Gitpilot](gitpilot) to help make Git thoughtless.
+If you use Git, you should check out my startup [Gitpilot][gitpilot] to help make Git thoughtless.
 
 [nvm]:https://github.com/creationix/nvm
 [homebrew]:http://mxcl.github.com/homebrew/
