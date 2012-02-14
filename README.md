@@ -79,14 +79,14 @@ To run LogMeUp, navigate to the installation directory, and run:
 
     bin/logmeup
   
-LogMeUp has uses a concept called `collections` and `apps`. Collections are **not** the same as MongoDB collections. Collections are just a logical grouping of log files. Apps just represent a log file.
+LogMeUp has a concept called `collections` and `apps`. Collections are **not** the same as MongoDB collections. Collections are just a logical grouping of log files. Apps just represent a log file.
 
 Let's say that you're doing some consulting work for **SpongeBob Software Inc**. SpongeBob Software Inc has hired you to help them with build two software packages. One is called **Super Invoices** and the other is called **Time Tracker**. You might make a collection named _spongebobsoftware_ and apps named _superinvoices_ and _timetracker_. You could then view the log data at http://yourserver.com:7070/log/spongebogsoftware/timetracker and http://yourserver.com:7070/log/spongebogsoftware/superinvoices.
 
 
 ### Configuration
 
-The default configuration file is placed in the installation directory config folder. It looks like:
+The default configuration file is placed in the installation directory `config` folder. It looks like:
 
 ```coffeescript
 module.exports = 
@@ -136,7 +136,8 @@ LogMeUp is a Node.js app built with the following modules:
 
 ### Available Libraries
 
-* Node.js
+* [Node.js](https://github.com/jprichardson/node-logmeup): `npm install logmeup`
+* [3rd Party App Logging](https://github.com/jprichardson/node-logmeup-server): `npm install logmeup-stdio`
 * C# (Coming soon)
 * Ruby (Coming soon)
 
@@ -279,13 +280,13 @@ View here: https://github.com/jprichardson/logmeup-server/blob/master/CHANGELOG.
 
 ## License
 
-Afero GNU Publice License Version 3. See [LICENSE](license) for complete details.
+Afero GNU Publice License Version 3. See [LICENSE][license] for complete details.
 
-Copyright (c) 2012 JP Richardson [Twitter](twitter) / [Google+](googleplus)
+Copyright (c) 2012 JP Richardson [Twitter][twitter] / [Google+][googleplus]
 
 ## Other
 
-If you use Git, you should check out my startup [Gitpilot](logmeup) to help make Git thoughtless.
+If you use Git, you should check out my startup [Gitpilot][gitpilot] to help make Git thoughtless.
 
 [nvm]:https://github.com/creationix/nvm
 [homebrew]:http://mxcl.github.com/homebrew/
