@@ -1,3 +1,7 @@
+0.0.5 / 2012-05-17
+* Removed dependency among old string.js module that modified the prototype.
+* Added Cakefile for testing.
+
 0.0.4 / 2012-01-31
 ==================
 
