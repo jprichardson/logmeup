@@ -2,6 +2,7 @@ express = require('express')
 fs = require('fs')
 path = require('path')
 database = require('./database')
+S = require('string')
 #assets = require('connect-assets')
 
 logmeup = module.exports = {}

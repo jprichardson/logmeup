@@ -37,7 +37,7 @@ if window? #hack to test if in browser, thus test-server.sh won't run this file
                       childrenEls = dataEl.childNodes
                       T responseData.records.length == childrenEls.length == RECORD_COUNT
                       for i in [0...childrenEls.length]
-                        T childrenEls[childrenEls.length - i - 1].innerText.contains(dataArray[i].message) #because elements are DESC
+                        T S(childrenEls[childrenEls.length - i - 1].innerText).contains(dataArray[i].message) #because elements are DESC
                       done()
           recur(0)
 
