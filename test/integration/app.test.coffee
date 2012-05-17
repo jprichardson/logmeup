@@ -1,12 +1,10 @@
-assert = require('assert')
 #request = require('request')
 logmeup = require('../../app/logmeup')
 config = require('../../config/config')
-require('string')
+S = require('string')
 request2 = require('superagent')
+require('testutil')
 
-T = (v) -> assert(v)
-F = (v) -> assert(!v)
 
 config.port = 7171
 
@@ -29,31 +27,31 @@ describe 'LogMeUp', ->
     it 'should create the database collection if it doesnt exist', (done) ->
       request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
         console.log res.text
-        T res.text.startsWith('Created')
-        T res.text.endsWith(collection + '_' + app)
+        T S(res.text).startsWith('Created')
+        T S(res.text).endsWith(collection + '_' + app)
         done()
 
     it 'should return an error message if the database collection does exist', (done) ->
       request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
         request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
-          T res.text.startsWith('Error')
-          T res.text.contains('exists')
+          T S(res.text).startsWith('Error')
+          T S(res.text).contains('exists')
           done()
 
   describe 'when DELETE /log/:collection/:app', ->
     it 'should delete the database collection if it exists', (done) ->
       request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
-        T res.text.startsWith('Created')
+        T S(res.text).startsWith('Created')
         request2.del("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
           #T err is null
-          T res.text.startsWith('Deleted')
-          T res.text.endsWith(collection + '_' + app)
+          T S(res.text).startsWith('Deleted')
+          T S(res.text).endsWith(collection + '_' + app)
           done()
 
     it 'should return an error message if the database collection does not exist', (done) ->
       request2.del("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
         #T err is null
-        T res.text.startsWith('Error')
+        T S(res.text).startsWith('Error')
         done()
 
   describe 'when POST /log/:collection/:app', ->
@@ -64,7 +62,7 @@ describe 'LogMeUp', ->
       request2.put(url).end (res) ->
         request2.post(url).type('json').send(data).end (res) -> #application/json
           #T err is null
-          T res.text.startsWith('Stored data')
+          T S(res.text).startsWith('Stored data')
           done()
 
     it 'should insert the request body Form data into the database', (done) ->
@@ -74,7 +72,7 @@ describe 'LogMeUp', ->
       request2.put(url).end (res) ->
         request2.post(url).set('Content-Type':'application/x-www-form-urlencoded').send(d).end (res) -> #BUG IN SUPERAGENT, in browser it's 'form-data' #application/x-www-form-urlencoded
           #T err is null
-          T res.text.startsWith('Stored data')
+          T S(res.text).startsWith('Stored data')
           done() 
 
     it 'should return an error message if the database collection does not exist', (done) ->
@@ -83,8 +81,8 @@ describe 'LogMeUp', ->
       url = "http://localhost:#{config.port}/log/#{collection}/#{app}"
       request2.post(url).type('json').send(data).end (res) ->
         #T err is null
-        T res.text.startsWith('Error')
-        T res.text.contains('does not exist')
+        T S(res.text).startsWith('Error')
+        T S(res.text).contains('does not exist')
         done()
 
   describe 'when GET /log/:collection/:app', ->
@@ -92,21 +90,23 @@ describe 'LogMeUp', ->
       request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
         request2.get("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
           #T err is null
-          T res.text.contains('Log data')
+          #console.log res.text
+          #exit()
+          T S(res.text).contains('Log data')
           done()
 
     it 'should return an error message if the database collection does not exist', (done) ->
       request2.get("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->
         #T err is null
-        T res.text.startsWith('Error')
-        T res.text.contains('does not exist')
+        T S(res.text).startsWith('Error')
+        T S(res.text).contains('does not exist')
         done()
   
   describe 'when GET /log/:collection/:app/data.json', ->
     it 'should return an error if the database collection does not exist', (done) ->
       request2.get("http://localhost:#{config.port}/log/#{collection}/#{app}/data.json").end (res) ->
-        T res.text.startsWith('Error')
-        T res.text.contains('does not exist')
+        T S(res.text).startsWith('Error')
+        T S(res.text).contains('does not exist')
         done()
 
     it 'should return JSON sorted (DESC by date) records in an array with the count of the total number of records', (done) ->
@@ -114,7 +114,7 @@ describe 'LogMeUp', ->
         url = "http://localhost:#{config.port}/log/#{collection}/#{app}"
         request2.post(url).type('json').send(data).end (res) ->
           #console.log body
-          T res.text.startsWith('Stored data')
+          T S(res.text).startsWith('Stored data')
           callback()
 
       request2.put("http://localhost:#{config.port}/log/#{collection}/#{app}").end (res) ->

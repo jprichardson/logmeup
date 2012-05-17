@@ -36,11 +36,11 @@ app.configure 'testing', ->
     fs.readFile path.join(__dirname,"../test/browser/#{req.params.file}"), (err,data) ->
       file = req.params.file
       console.log file
-      if file.endsWith('.html')
+      if S(file).endsWith('.html')
         res.header("Content-Type", "text/html")
-      else if file.endsWith('.js')
+      else if S(file).endsWith('.js')
         res.header("Content-Type", "application/javascript")
-      else if file.endsWith('.coffee')
+      else if S(file).endsWith('.coffee')
         res.header("Content-Type", "text/coffeescript");
       
       if data?

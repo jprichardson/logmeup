@@ -6,7 +6,7 @@ mongo = require('mongodb')
 {Db} = mongo
 {Connection} = mongo
 {Server} = mongo
-require('string')
+S = require('string')
 
 module.exports = database = {workingDatabase: null, collection: {}}
 collection = database.collection
@@ -48,7 +48,7 @@ collection.exists = (params = {}, callback) ->
       exists = false
       for col in names
         #console.log JSON.stringify(col)
-        if col.name.endsWith(name)
+        if S(col.name).endsWith(name)
           exists = true
           break
       callback(null, exists)
@@ -62,7 +62,7 @@ collection.fetchProperties = (params = {}, callback) ->
     else
       myCol = null
       for col in cols
-        if col.name.endsWith(name)
+        if S(col.name).endsWith(name)
           myCol = col
           break
       if myCol?
