@@ -12,13 +12,13 @@ if window? #hack to test if in browser, thus test-server.sh won't run this file
     describe 'when browser navigates to log/:collection/:app', ->
       it 'should show the most recent data', (done) ->      
         request.put(url).end (res) ->
-          if res.text.startsWith('Error') then throw new Error(res.text)
-          T res.text.startsWith('Created')
-          T res.text.endsWith(collection + '_' + app)
+          if S(res.text).startsWith('Error') then throw new Error(res.text)
+          T S(res.text).startsWith('Created')
+          T S(res.text).endsWith(collection + '_' + app)
 
           insertRecord = (data,callback) -> #convenience method to insert data
             request.post(url).send(data).end (res) ->
-              T res.text.startsWith('Stored data')
+              T S(res.text).startsWith('Stored data')
               callback()
 
           dataArray = []
@@ -37,7 +37,7 @@ if window? #hack to test if in browser, thus test-server.sh won't run this file
                       childrenEls = dataEl.childNodes
                       T responseData.records.length == childrenEls.length == RECORD_COUNT
                       for i in [0...childrenEls.length]
-                        T childrenEls[childrenEls.length - i - 1].innerText.contains(dataArray[i].message) #because elements are DESC
+                        T S(childrenEls[childrenEls.length - i - 1].innerText).contains(dataArray[i].message) #because elements are DESC
                       done()
           recur(0)
 
@@ -46,12 +46,12 @@ if window? #hack to test if in browser, thus test-server.sh won't run this file
         logmeup.setupSocket(window.location.origin, collection, app)
 
         request.put(url).end (res) ->
-          if res.text.startsWith('Error') then throw new Error(res.text)
-          T res.text.startsWith('Created')
+          if S(res.text).startsWith('Error') then throw new Error(res.text)
+          T S(res.text).startsWith('Created')
 
           insertRecord = (data,callback) -> #convenience method to insert data
             request.post(url).send(data).end (res) ->
-              T res.text.startsWith('Stored data')
+              T S(res.text).startsWith('Stored data')
               if callback? then callback()
 
           INSERT_COUNT = 5
@@ -59,7 +59,7 @@ if window? #hack to test if in browser, thus test-server.sh won't run this file
 
           logmeup.on 'data', (data) ->
             #alert data.msg
-            T data.data.msg.contains("Some crazy message")
+            T S(data.data.msg).contains("Some crazy message")
             counter += 1
             if counter is INSERT_COUNT
               done()

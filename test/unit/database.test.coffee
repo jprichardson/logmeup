@@ -1,10 +1,9 @@
 database = require('../../app/database')
 assert = require('assert')
 config = require('../../config/config')
-require('string')
+S = require('string')
+require('testutil')
 
-T = (v) -> assert(v)
-F = (v) -> assert(!v)
 
 dbcfg = config.database.testing
 
@@ -100,7 +99,7 @@ describe 'database', ->
           database.collection.create name: someCol, maxRecords: 1000, sizeInMb: 1, (err, col) ->
             database.collection.fetchProperties name: someCol, (err, props) ->
               T err is null
-              T props.name.endsWith(someCol)
+              T S(props.name).endsWith(someCol)
               T props.capped isnt undefined
               T props.maxRecords isnt undefined
               T props.sizeInMb isnt undefined

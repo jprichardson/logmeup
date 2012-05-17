@@ -16,8 +16,8 @@
         "url" : "http://www.gnu.org/licenses/agpl.html"
     }],
     "dependencies": {
-        "string": ">=0.0.3",
-        "coffee-script" : ">=1.2.0",
+        "string": "0.2.x",
+        "coffee-script" : "1.2.x",
         "socket.io": ">=0.8.7",
         "mongodb": ">=0.9.8-1",
         "commander": ">=0.5.2",
